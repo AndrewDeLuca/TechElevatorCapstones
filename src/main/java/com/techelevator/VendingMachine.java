@@ -1,14 +1,16 @@
 package com.techelevator;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class VendingMachine implements VendingMachineItems{
-    private Map<String, String> mapOfItems = new HashMap<>();
+public class VendingMachine {
+    private List<String> inventoryList = new ArrayList<>();
 
 
-    public VendingMachine(Map<String, String> mapOfItems) {
-        this.mapOfItems = mapOfItems;
+    public VendingMachine(List<String> inventoryList) {
+        this.inventoryList = inventoryList;
 
     }
 
@@ -16,32 +18,11 @@ public class VendingMachine implements VendingMachineItems{
 
     }
 
-    public Map<String, String> getMapOfItems() {
-        return mapOfItems;
+    public List<String> getInventoryList() {
+        return inventoryList;
     }
 
-    public void setMapOfItems(Map<String, String> mapOfItems) {
-        this.mapOfItems = mapOfItems;
-    }
-
-
-    @Override
-    public String getName() {
-        return null;
-    }
-
-    @Override
-    public String getSlotID() {
-        return null;
-    }
-
-    @Override
-    public double getPrice() {
-        return 0;
-    }
-
-    @Override
-    public int getMaxCapacity() {
-        return 0;
+    public void addToInventoryList(String inventoryList) {
+        this.inventoryList.add(inventoryList);
     }
 }
