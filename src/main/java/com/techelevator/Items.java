@@ -5,15 +5,14 @@ public class Items {
     private String name;
     private String slotID;
     private double price;
-    private int maxCapacity = 5;
     private String type;
 
 
-    public Items(String name, String slotID, double price, int maxCapacity, String type) {
+    public Items(String name, String slotID, double price, String type) {
         this.name = name;
         this.slotID = slotID;
         this.price = price;
-        this.maxCapacity = maxCapacity;
+
         this.type = type;
 
     }
@@ -45,13 +44,7 @@ public class Items {
         this.price = price;
     }
 
-    public int getMaxCapacity() {
-        return maxCapacity;
-    }
 
-    public void setMaxCapacity(int maxCapacity) {
-        this.maxCapacity = maxCapacity;
-    }
 
     public String getType() {
         return type;

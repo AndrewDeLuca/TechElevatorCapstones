@@ -31,7 +31,7 @@ public class ItemOptions {
                         chips.setName(splitLineForRestocking[1]);
                         chips.setPrice(Double.parseDouble(splitLineForRestocking[2]));
                         chips.setType(splitLineForRestocking[3]);
-                        vendingMachine.addToInventoryList(splitLineForRestocking[0] + " | " +splitLineForRestocking[1] + " | " + splitLineForRestocking[2] + " | " + splitLineForRestocking[3]);
+                        vendingMachine.addToInventoryList(splitLineForRestocking[0], chips;
                         break;
                     case 'B':
                         Candy candy = new Candy();
@@ -39,7 +39,7 @@ public class ItemOptions {
                         candy.setName(splitLineForRestocking[1]);
                         candy.setPrice(Double.parseDouble(splitLineForRestocking[2]));
                         candy.setType(splitLineForRestocking[3]);
-                        vendingMachine.addToInventoryList(splitLineForRestocking[0] + " | " +splitLineForRestocking[1] + " | " + splitLineForRestocking[2] + " | " + splitLineForRestocking[3]);
+                        vendingMachine.addToInventoryList(splitLineForRestocking[0], candy;
                         break;
                     case 'C':
                         Beverages beverages = new Beverages();
@@ -47,7 +47,7 @@ public class ItemOptions {
                         beverages.setName(splitLineForRestocking[1]);
                         beverages.setPrice(Double.parseDouble(splitLineForRestocking[2]));
                         beverages.setType(splitLineForRestocking[3]);
-                        vendingMachine.addToInventoryList(splitLineForRestocking[0] + " | " +splitLineForRestocking[1] + " | " + splitLineForRestocking[2] + " | " + splitLineForRestocking[3]);
+                        vendingMachine.addToInventoryList(splitLineForRestocking[0], beverages);
                         break;
                     case 'D':
                         Gum gum = new Gum();
@@ -55,7 +55,7 @@ public class ItemOptions {
                         gum.setName(splitLineForRestocking[1]);
                         gum.setPrice(Double.parseDouble(splitLineForRestocking[2]));
                         gum.setType(splitLineForRestocking[3]);
-                        vendingMachine.addToInventoryList(splitLineForRestocking[0] + " | " +splitLineForRestocking[1] + " | " + splitLineForRestocking[2] + " | " + splitLineForRestocking[3]);
+                        vendingMachine.addToInventoryList(splitLineForRestocking[0], gum);
                         break;
                     default:
                         System.out.println("Input File Not Found!");

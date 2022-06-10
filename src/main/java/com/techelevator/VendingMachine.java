@@ -1,15 +1,12 @@
 package com.techelevator;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class VendingMachine {
-    private List<String> inventoryList = new ArrayList<>();
+    private Map<String, Items> inventoryList = new LinkedHashMap<>();
 
 
-    public VendingMachine(List<String> inventoryList) {
+    public VendingMachine(Map<String, Items> inventoryList) {
         this.inventoryList = inventoryList;
 
     }
@@ -18,11 +15,11 @@ public class VendingMachine {
 
     }
 
-    public List<String> getInventoryList() {
+    public Map<String, Items> getInventoryList() {
         return inventoryList;
     }
 
-    public void addToInventoryList(String inventoryList) {
-        this.inventoryList.add(inventoryList);
+    public void addToInventoryList(String inventoryList, Items type) {
+        this.inventoryList.put(inventoryList, type);
     }
 }
