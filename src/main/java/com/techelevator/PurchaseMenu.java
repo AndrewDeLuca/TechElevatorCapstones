@@ -36,6 +36,7 @@ public class PurchaseMenu {
                 case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
                     System.exit(0);
             }
+            System.out.println();
             System.out.println("Current Money Provided: " /*someVariable*/);
         }
 
