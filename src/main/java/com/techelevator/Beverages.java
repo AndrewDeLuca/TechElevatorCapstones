@@ -1,18 +1,37 @@
 package com.techelevator;
 
-public class Beverages extends Items {
+public class Beverages implements Items {
     private String soundMessage = "Glugg, Glugg, Yum!";
     private int maxCapacity = 5;
+    private double price;
+    private String slotID;
+    private String name;
+    private String type;
 
-    public Beverages(String name, String slotID, double price, int maxCapacity,String type, String soundMessage) {
-        super(name, slotID, price, type);
-        this.maxCapacity = maxCapacity;
-        this.soundMessage = soundMessage;
+    @Override
+    public String getName() {
+        return name;
     }
 
-    public Beverages() {
-
+    @Override
+    public double getPrice() {
+        return price;
     }
+
+    @Override
+    public String getSlotID() {
+        return slotID;
+    }
+
+    @Override
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public String getType(){
+        return type;
+    }
+
 
     public String getSoundMessage() {
         return soundMessage;
@@ -22,9 +41,23 @@ public class Beverages extends Items {
         this.soundMessage = soundMessage;
     }
 
-    public int getMaxCapacity() {
-        return maxCapacity;
+    public void setPrice(double price) {
+        this.price = price;
     }
+
+    public void setSlotID(String slotID) {
+        this.slotID = slotID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+
 
     public String dispense(String getSlotID) {
         String message = new String();

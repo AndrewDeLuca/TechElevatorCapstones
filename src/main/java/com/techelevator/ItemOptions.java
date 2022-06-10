@@ -4,6 +4,7 @@ import com.techelevator.view.Menu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ItemOptions {
@@ -31,7 +32,7 @@ public class ItemOptions {
                         chips.setName(splitLineForRestocking[1]);
                         chips.setPrice(Double.parseDouble(splitLineForRestocking[2]));
                         chips.setType(splitLineForRestocking[3]);
-                        vendingMachine.addToInventoryList(splitLineForRestocking[0], chips;
+                        vendingMachine.addToInventoryList(splitLineForRestocking[0], chips);
                         break;
                     case 'B':
                         Candy candy = new Candy();
@@ -39,7 +40,7 @@ public class ItemOptions {
                         candy.setName(splitLineForRestocking[1]);
                         candy.setPrice(Double.parseDouble(splitLineForRestocking[2]));
                         candy.setType(splitLineForRestocking[3]);
-                        vendingMachine.addToInventoryList(splitLineForRestocking[0], candy;
+                        vendingMachine.addToInventoryList(splitLineForRestocking[0], candy);
                         break;
                     case 'C':
                         Beverages beverages = new Beverages();
@@ -65,8 +66,16 @@ public class ItemOptions {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        for (String item : vendingMachine.getInventoryList()) {
-            System.out.println(item);
+        for (String key : vendingMachine.getInventoryList().keySet()) {
+            System.out.print(key + " |");
+            System.out.print(" " + vendingMachine.getInventoryList().get(key).getName() + " |");
+            System.out.print(" " + vendingMachine.getInventoryList().get(key).getPrice() + " |" + "\n");
+
+            if (vendingMachine.getInventoryList().get(key).getMaxCapacity() >= 1) {
+                System.out.println(vendingMachine.getInventoryList().get(key).getMaxCapacity() + "/5" + " AVAILABLE");
+            } else {
+                System.out.println("SOLD OUT");
+            }
         }
 
 

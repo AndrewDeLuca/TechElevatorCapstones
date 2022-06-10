@@ -1,18 +1,36 @@
 package com.techelevator;
 import com.techelevator.Balance;
 
-public class Candy extends Items {
+public class Candy implements Items {
     private String soundMessage = "Munch, Munch, Yum!";
     private int maxCapacity = 5;
+    private double price;
+    private String slotID;
+    private String name;
+    private String type;
 
-    public Candy(String name, String slotID, double price, int maxCapacity,String type, String soundMessage) {
-        super(name, slotID, price, type);
-        this.soundMessage = soundMessage;
-        this.maxCapacity = maxCapacity;
+    @Override
+    public String getName() {
+        return name;
     }
 
-    public Candy() {
+    @Override
+    public double getPrice() {
+        return price;
+    }
 
+    @Override
+    public String getSlotID() {
+        return slotID;
+    }
+
+    @Override
+    public int getMaxCapacity() {
+        return maxCapacity;
+    }
+
+    public String getType(){
+        return type;
     }
 
     public String getSoundMessage() {
@@ -23,8 +41,24 @@ public class Candy extends Items {
         this.soundMessage = soundMessage;
     }
 
-    public int getMaxCapacity() {
-        return maxCapacity;
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setSlotID(String slotID) {
+        this.slotID = slotID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String dispense(String getSlotID) {
