@@ -4,10 +4,21 @@ import com.techelevator.view.Menu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Scanner;
 
 public class ItemOptions {
+
+    private Map<String, Items> inventoryList = new LinkedHashMap<>();
+
+    public Map<String, Items> getInventoryList() {
+        return inventoryList;
+    }
+
+    public void addToInventoryList(String inventoryList, Items type) {
+        this.inventoryList.put(inventoryList, type);
+    }
 
     public ItemOptions(){
 
@@ -65,17 +76,6 @@ public class ItemOptions {
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        for (String key : vendingMachine.getInventoryList().keySet()) {
-            System.out.print(key + " |");
-            System.out.print(" " + vendingMachine.getInventoryList().get(key).getName() + " |");
-            System.out.print(" " + vendingMachine.getInventoryList().get(key).getPrice() + " |" + "\n");
-
-            if (vendingMachine.getInventoryList().get(key).getMaxCapacity() >= 1) {
-                System.out.println(vendingMachine.getInventoryList().get(key).getMaxCapacity() + "/5" + " AVAILABLE");
-            } else {
-                System.out.println("SOLD OUT");
-            }
         }
 
 
