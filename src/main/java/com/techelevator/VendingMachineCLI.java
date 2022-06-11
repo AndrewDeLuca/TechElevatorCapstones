@@ -38,8 +38,10 @@ public class VendingMachineCLI {
 	File vendingMachineCSV = new File(fileName);
 	ItemOptions itemOptions = new ItemOptions();
 
+
 	Scanner input = new Scanner(System.in);
 	Balance balance = new Balance();
+	String formattedMoney = NumberFormat.getCurrencyInstance().format(balance.getCurrentMoney());
 
 
 	public void run() {
@@ -67,6 +69,8 @@ public class VendingMachineCLI {
 	public void runPurchase() {
 
 		while (true) {
+			System.out.println();
+			System.out.println("Current Money Provided: " + formattedMoney);
 			String choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
 			switch (choice) {
@@ -78,10 +82,12 @@ public class VendingMachineCLI {
 					break;
 				case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
 					System.exit(0);
+
+
+
 			}
 
-			System.out.println();
-			System.out.println("Current Money Provided: " + balance.getCurrentMoney());
+
 		}
 
 	}
@@ -108,10 +114,10 @@ public class VendingMachineCLI {
 					runPurchase();
 			}
 
-			String formatted = NumberFormat.getCurrencyInstance().format(balance.getCurrentMoney());
+			formattedMoney = NumberFormat.getCurrencyInstance().format(balance.getCurrentMoney());
 
 			System.out.println();
-			System.out.println("Current Money Provided: " + formatted);
+			System.out.println("Current Money Provided: " + formattedMoney);
 		}
 
 	}
@@ -124,10 +130,16 @@ public class VendingMachineCLI {
 			System.out.println("Please enter Slot Number to make purchase: ");
 			String itemSlotChoice = input.nextLine().toUpperCase();
 
-			for (String key : itemOptions.getInventoryList().keySet()) {
-				if (!itemSlotChoice.equals(key)) {
-					System.out.println("The entered product code does not exist!");
-				}
+			if (!itemOptions.getInventoryList().containsKey(itemSlotChoice)) {
+				System.out.println("Slot Number does not exist, please enter a valid Slot Number");
+				System.out.println();
+				System.out.println();
+			}
+
+
+			if (itemOptions.getInventoryList().containsKey(itemSlotChoice)) {
+				balance.subtractFromCurrentMoney(itemOptions.getInventoryList().get(itemSlotChoice).getPrice());
+				System.out.println(itemOptions.getInventoryList().get(itemSlotChoice).dispense(itemSlotChoice) + "\n" + "Your remaining balance is: " + balance.getCurrentMoney());
 			}
 
 
@@ -154,6 +166,7 @@ public class VendingMachineCLI {
 				System.out.println("SOLD OUT");
 			}
 		}
+
 
 	}
 

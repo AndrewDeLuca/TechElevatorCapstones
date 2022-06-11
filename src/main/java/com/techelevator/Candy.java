@@ -61,6 +61,7 @@ public class Candy implements Items {
         this.type = type;
     }
 
+    @Override
     public String dispense(String getSlotID) {
         String message = new String();
        if (maxCapacity == 0) {

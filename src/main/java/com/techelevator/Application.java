@@ -9,10 +9,6 @@ public class Application {
         VendingMachineCLI cli = new VendingMachineCLI(menu);
         cli.run();
 
-
-
-
-
     }
 
 }
