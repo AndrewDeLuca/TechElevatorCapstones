@@ -119,10 +119,16 @@ public class VendingMachineCLI {
 	public void makeSelection() {
 
 		while (true) {
-
+			displayItems();
 			itemOptions.vendingMachineOptions();
 			System.out.println("Please enter Slot Number to make purchase: ");
 			String itemSlotChoice = input.nextLine().toUpperCase();
+
+			for (String key : itemOptions.getInventoryList().keySet()) {
+				if (!itemSlotChoice.equals(key)) {
+					System.out.println("The entered product code does not exist!");
+				}
+			}
 
 
 			//         if (!itemSlotChoice.equals(vendingMachine.getInventoryList())) {
@@ -134,22 +140,22 @@ public class VendingMachineCLI {
 		}
 	}
 
-			public void displayItems() {
+	public void displayItems() {
 
 
-				for (String key : itemOptions.getInventoryList().keySet()) {
-					System.out.print(key + " |");
-					System.out.print(" " + itemOptions.getInventoryList().get(key).getName() + " |");
-					System.out.print(" " + itemOptions.getInventoryList().get(key).getPrice() + " |" + "\n");
+		for (String key : itemOptions.getInventoryList().keySet()) {
+			System.out.print(key + " |");
+			System.out.print(" " + itemOptions.getInventoryList().get(key).getName() + " |");
+			System.out.print(" " + itemOptions.getInventoryList().get(key).getPrice() + " |" + "\n");
 
-					if (itemOptions.getInventoryList().get(key).getMaxCapacity() >= 1) {
-						System.out.println(itemOptions.getInventoryList().get(key).getMaxCapacity() + "/5" + " AVAILABLE");
-					} else {
-						System.out.println("SOLD OUT");
-					}
-				}
-
+			if (itemOptions.getInventoryList().get(key).getMaxCapacity() >= 1) {
+				System.out.println(itemOptions.getInventoryList().get(key).getMaxCapacity() + "/5" + " AVAILABLE");
+			} else {
+				System.out.println("SOLD OUT");
 			}
-
 		}
+
+	}
+
+}
 
