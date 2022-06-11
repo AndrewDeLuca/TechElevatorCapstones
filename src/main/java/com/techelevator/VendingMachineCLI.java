@@ -70,7 +70,7 @@ public class VendingMachineCLI {
 
 		while (true) {
 			System.out.println();
-			System.out.println("Current Money Provided: " + formattedMoney);
+			System.out.println("Current balance: " + balance.getCurrentMoney());
 			String choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
 			switch (choice) {
@@ -126,7 +126,6 @@ public class VendingMachineCLI {
 
 		while (true) {
 			displayItems();
-			itemOptions.vendingMachineOptions();
 			System.out.println("Please enter Slot Number to make purchase: ");
 			String itemSlotChoice = input.nextLine().toUpperCase();
 
@@ -140,6 +139,7 @@ public class VendingMachineCLI {
 			if (itemOptions.getInventoryList().containsKey(itemSlotChoice)) {
 				balance.subtractFromCurrentMoney(itemOptions.getInventoryList().get(itemSlotChoice).getPrice());
 				System.out.println(itemOptions.getInventoryList().get(itemSlotChoice).dispense(itemSlotChoice) + "\n" + "Your remaining balance is: " + balance.getCurrentMoney());
+				runPurchase();
 			}
 
 
