@@ -10,6 +10,7 @@ public class Balance {
     public void addToCurrentMoney(double moneyToAdd) {
         currentMoney = moneyToAdd + currentMoney;
 
+
     }
 
     public void subtractFromCurrentMoney(double subtractFromMoney) {

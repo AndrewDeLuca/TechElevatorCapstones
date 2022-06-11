@@ -60,7 +60,7 @@ public class Beverages implements Items {
 
     @Override
     public String dispense(String getSlotID) {
-        String message = new String();
+        String message = "";
         if (maxCapacity == 0) {
             message = message + "This Item is Sold Out.";
         } else {
