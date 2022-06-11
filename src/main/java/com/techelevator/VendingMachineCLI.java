@@ -136,10 +136,13 @@ public class VendingMachineCLI {
 			}
 
 
-			if (itemOptions.getInventoryList().containsKey(itemSlotChoice)) {
+			if (itemOptions.getInventoryList().containsKey(itemSlotChoice) && soldOut == false) {
 				balance.subtractFromCurrentMoney(itemOptions.getInventoryList().get(itemSlotChoice).getPrice());
 				System.out.println(itemOptions.getInventoryList().get(itemSlotChoice).dispense(itemSlotChoice) + "\n" + "Your remaining balance is: " + balance.getCurrentMoney());
 				runPurchase();
+			} else {
+				System.out.println();
+				System.out.println("Please choose an item that is in stock");
 			}
 
 
@@ -151,7 +154,7 @@ public class VendingMachineCLI {
 
 		}
 	}
-
+	public boolean soldOut = false;
 	public void displayItems() {
 
 
@@ -163,6 +166,7 @@ public class VendingMachineCLI {
 			if (itemOptions.getInventoryList().get(key).getMaxCapacity() >= 1) {
 				System.out.println(itemOptions.getInventoryList().get(key).getMaxCapacity() + "/5" + " AVAILABLE");
 			} else {
+				soldOut = true;
 				System.out.println("SOLD OUT");
 			}
 		}

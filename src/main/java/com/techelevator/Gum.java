@@ -58,15 +58,16 @@ public class Gum implements Items {
     }
 
 
-
+    @Override
     public String dispense(String getSlotID) {
         String message = new String();
         if (maxCapacity == 0) {
             message = message + "This Item is Sold Out.";
         } else {
-            maxCapacity = maxCapacity - 1;
+            maxCapacity = (maxCapacity - 1);
             System.out.println(soundMessage);
-            message = message + "You have selected: " + getName() + getPrice(); // + currentMoney
+            message = message + "You have selected: " + getName() + " " + getPrice();
+
 
         }
         return message;
