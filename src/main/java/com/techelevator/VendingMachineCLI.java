@@ -4,7 +4,14 @@ import com.techelevator.view.Menu;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.text.DateFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 import java.util.Scanner;
 
 public class VendingMachineCLI {
@@ -34,14 +41,23 @@ public class VendingMachineCLI {
 		this.menu = menu;
 	}
 
-	String fileName = "vendingmachine.csv";
-	File vendingMachineCSV = new File(fileName);
+//	String fileName = "vendingmachine.csv";
+//	File vendingMachineCSV = new File(fileName);
 	ItemOptions itemOptions = new ItemOptions();
 
 
 	Scanner input = new Scanner(System.in);
 	Balance balance = new Balance();
 	String formattedMoney = NumberFormat.getCurrencyInstance().format(balance.getCurrentMoney());
+
+	File log = new File("log.txt"); // file that will log feedMoney, transactions, finish transaction
+
+
+
+
+
+	DateFormat dateTimeFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+	Date date = new Date();
 
 
 	public void run() {
@@ -70,7 +86,7 @@ public class VendingMachineCLI {
 
 		while (true) {
 			System.out.println();
-			System.out.println("Current balance: " + balance.getCurrentMoney());
+			System.out.println("Current balance: $" + String.format("%.2f", balance.getCurrentMoney()));
 			String choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
 			switch (choice) {
@@ -81,7 +97,7 @@ public class VendingMachineCLI {
 					makeSelection();
 					break;
 				case PURCHASE_MENU_OPTION_FINISH_TRANSACTION:
-					System.exit(0);
+					finishTransaction();
 
 
 
@@ -91,36 +107,66 @@ public class VendingMachineCLI {
 		}
 
 	}
-
+	double addedMoney = 0.00;
+	double previousAmount = 0.00;
 	public void feedMoneyRun() {
+
+
 
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(FEED_OPTIONS);
 
 			switch (choice) {
 				case FEED_OPTION_1:
-					balance.addToCurrentMoney(1.00);
+					addedMoney = 1.00;
+					balance.addToCurrentMoney(addedMoney);
+					printToLogFeedMoney();
 					break;
 				case FEED_OPTION_2:
-					balance.addToCurrentMoney(2.00);
+					addedMoney = 2.00;
+					balance.addToCurrentMoney(addedMoney);
+					printToLogFeedMoney();
 					break;
 				case FEED_OPTION_3:
-					balance.addToCurrentMoney(5.00);
+					addedMoney = 5.00;
+					balance.addToCurrentMoney(addedMoney);
+					printToLogFeedMoney();
 					break;
 				case FEED_OPTION_4:
-					balance.addToCurrentMoney(10.00);
+					addedMoney = 10.00;
+					balance.addToCurrentMoney(addedMoney);
+					printToLogFeedMoney();
 					break;
 				case FEED_OPTION_5:
 					runPurchase();
 			}
 
-			formattedMoney = NumberFormat.getCurrencyInstance().format(balance.getCurrentMoney());
+
 
 			System.out.println();
-			System.out.println("Current Money Provided: " + formattedMoney);
+			System.out.println("Current Money Provided: $" + String.format("%.2f", balance.getCurrentMoney()));
+
+			previousAmount = balance.getCurrentMoney();
+
+
 		}
 
+
+
 	}
+
+	public void printToLogFeedMoney(){
+		try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
+			writer.println(dateTimeFormatter.format(date) + " FEED MONEY: " + "$" + addedMoney + " $" + String.format("%.2f", balance.getCurrentMoney()));
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+
+
+
 
 	public void makeSelection() {
 
@@ -136,21 +182,32 @@ public class VendingMachineCLI {
 			}
 
 
+			if (itemOptions.getInventoryList().containsKey(itemSlotChoice) && balance.getCurrentMoney() < itemOptions.getInventoryList().get(itemSlotChoice).getPrice()) {
+				System.out.println("Insufficient Funds, please feed the machine money (1)");
+				runPurchase();
+			}
+
 			if (itemOptions.getInventoryList().containsKey(itemSlotChoice) && soldOut == false) {
 				balance.subtractFromCurrentMoney(itemOptions.getInventoryList().get(itemSlotChoice).getPrice());
-				System.out.println(itemOptions.getInventoryList().get(itemSlotChoice).dispense(itemSlotChoice) + "\n" + "Your remaining balance is: " + balance.getCurrentMoney());
+				System.out.println(itemOptions.getInventoryList().get(itemSlotChoice).dispense(itemSlotChoice) + "\n" + "Your remaining balance is: $" + String.format("%.2f", balance.getCurrentMoney()));
+
+				try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
+					writer.println(dateTimeFormatter.format(date) + " " + itemOptions.getInventoryList().get(itemSlotChoice).getName() + " " + itemOptions.getInventoryList().get(itemSlotChoice).getSlotID() + " " + "$" + String.format("%.2f", previousAmount) + " $" + String.format("%.2f", balance.getCurrentMoney()));
+
+				} catch (FileNotFoundException e) {
+					e.printStackTrace();
+				}
+
+				previousAmount = balance.getCurrentMoney();
+
 				runPurchase();
 			} else {
 				System.out.println();
-				System.out.println("Please choose an item that is in stock");
+				System.out.println("Please Select Product that is in stock (2).");
+				runPurchase();
 			}
 
 
-			//         if (!itemSlotChoice.equals(vendingMachine.getInventoryList())) {
-			//             System.out.println((System.lineSeparator() + "*** " + itemSlotChoice + " is not a valid option ***" + System.lineSeparator()));
-			//        }
-
-			//      System.out.println();
 
 		}
 	}
@@ -171,6 +228,25 @@ public class VendingMachineCLI {
 			}
 		}
 
+
+	}
+
+	public void finishTransaction() {
+		if (balance.getCurrentMoney() > 0) {
+			System.out.println("Your Change is: " + ChangeMaker.changeMaker(balance.getCurrentMoney()));
+		}
+
+		balance.subtractFromCurrentMoney(balance.getCurrentMoney());
+		System.out.println("Current balance: $" + String.format("%.2f", balance.getCurrentMoney()));
+
+		try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
+			writer.println(dateTimeFormatter.format(date) + " " + "GIVE CHANGE:" + " " + "$" + String.format("%.2f", previousAmount) + " $" + String.format("%.2f", balance.getCurrentMoney()));
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+
+		run();
 
 	}
 

@@ -5,7 +5,10 @@ import java.util.Map;
 
 public class ChangeMaker {
 
+
+
     public static String changeMaker (double currentMoney) {
+
 
         CoinChange[] coins = new CoinChange[] { new Quarter(), new Dime(), new Nickel() };
         currentMoney = currentMoney * 100; // So that we get currentMoney in cents
@@ -35,4 +38,6 @@ public class ChangeMaker {
 
         return changeString;
     }
+
+
 }
