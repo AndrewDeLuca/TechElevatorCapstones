@@ -22,11 +22,11 @@ public class ChangeMaker {
                 break;
             }
 
-            int cents = (int)currentMoney / coin.getValue(); //casts currentMoney to int and divides by coin value then stores in cents variable
+            int coinCount = (int)currentMoney / coin.getValue(); //casts currentMoney to int and divides by coin value then stores in coinCount variable
 
-            if (cents > 0) { // if there is any change to be made
-                currentMoney = currentMoney % (coin.getValue() * cents); // remainder of currentMoney / (coinValue * (currentMoney / coinValue))
-                changeMap.put(coin, cents);
+            if (coinCount > 0) { // if there is any change to be made
+                currentMoney = currentMoney % (coin.getValue() * coinCount); // remainder of currentMoney / (coinValue * (currentMoney / coinValue))
+                changeMap.put(coin, coinCount);
             }
         }
 
