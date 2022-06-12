@@ -57,6 +57,9 @@ public class Chips implements Items {
         this.type = type;
     }
 
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
 
     @Override
     public String dispense(String getSlotID) {
@@ -66,7 +69,7 @@ public class Chips implements Items {
         } else {
             maxCapacity = (maxCapacity - 1);
             System.out.println(soundMessage);
-            message = message + "You have selected: " + getName() + "  $" + String.format("%.2f", getPrice()) ;
+            message = message + "You have selected: " + getName() + " $" + String.format("%.2f", getPrice()) ;
 
 
         }

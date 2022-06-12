@@ -28,8 +28,6 @@ public class ItemOptions {
         String fileName = "vendingmachine.csv";
         File vendingMachineCSV = new File(fileName);
 
-
-        // 4. The vending machine is automatically restocked each time the application runs.
         // Stocking VendingMachine with Items
         try (Scanner inventoryListScanner = new Scanner(vendingMachineCSV)) {
             while (inventoryListScanner.hasNextLine()) {

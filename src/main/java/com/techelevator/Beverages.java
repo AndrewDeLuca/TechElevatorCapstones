@@ -57,6 +57,10 @@ public class Beverages implements Items {
         this.type = type;
     }
 
+    public void setMaxCapacity(int maxCapacity) {
+        this.maxCapacity = maxCapacity;
+    }
+
 
     @Override
     public String dispense(String getSlotID) {

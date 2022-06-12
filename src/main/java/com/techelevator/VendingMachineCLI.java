@@ -109,9 +109,9 @@ public class VendingMachineCLI {
 	}
 	double addedMoney = 0.00;
 	double previousAmount = 0.00;
+
+
 	public void feedMoneyRun() {
-
-
 
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(FEED_OPTIONS);
