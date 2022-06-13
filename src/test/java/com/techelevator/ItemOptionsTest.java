@@ -1,5 +1,6 @@
 package com.techelevator;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 public class ItemOptionsTest {
@@ -11,4 +12,20 @@ public class ItemOptionsTest {
 
         // assert
     }
+
+
+    @Test
+    public void test_inventory_for_match() {
+        // arrange
+        ItemOptions itemOptions = new ItemOptions();
+
+        // act
+        String inventoryList = String.valueOf(itemOptions.getInventoryList());
+
+        // assert
+        Assert.assertArrayEquals(new String[]{"A1"}, new String[]{"A1"});
+
+
+    }
+
 }
