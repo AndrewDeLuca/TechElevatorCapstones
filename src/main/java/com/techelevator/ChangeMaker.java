@@ -25,7 +25,7 @@ public class ChangeMaker {
             int coinCount = (int)currentMoney / coin.getValue(); //casts currentMoney to int and divides by coin value then stores in coinCount variable
 
             if (coinCount > 0) { // if there is any change to be made
-                currentMoney = currentMoney % (coin.getValue() * coinCount); // remainder of currentMoney / (coinValue * (currentMoney / coinValue))
+                currentMoney = currentMoney % (coin.getValue() * coinCount); // adds how many Coins per Quarter, Dime, Nickel
                 changeMap.put(coin, coinCount);
             }
         }
