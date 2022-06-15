@@ -39,10 +39,10 @@ public class VendingMachineCLI {
 
 	public VendingMachineCLI(Menu menu) {
 		this.menu = menu;
+		itemOptions.vendingMachineOptions();
 	}
 
-//	String fileName = "vendingmachine.csv";
-//	File vendingMachineCSV = new File(fileName);
+
 	ItemOptions itemOptions = new ItemOptions();
 
 
@@ -62,7 +62,7 @@ public class VendingMachineCLI {
 
 	public void run() {
 
-		itemOptions.vendingMachineOptions();
+
 
 		while (true) {
 			String choice = (String) menu.getChoiceFromOptions(MAIN_MENU_OPTIONS);
@@ -195,6 +195,7 @@ public class VendingMachineCLI {
 					writer.println(dateTimeFormatter.format(date) + " " + itemOptions.getInventoryList().get(itemSlotChoice).getName() + " " + itemOptions.getInventoryList().get(itemSlotChoice).getSlotID() + " " + "$" + String.format("%.2f", previousAmount) + " $" + String.format("%.2f", balance.getCurrentMoney()));
 
 				} catch (FileNotFoundException e) {
+
 					e.printStackTrace();
 				}
 
