@@ -29,11 +29,11 @@ public class VendingMachineCLI {
 	private static final String[] PURCHASE_MENU_OPTIONS = {PURCHASE_MENU_OPTION_FEED_MONEY, PURCHASE_MENU_OPTION_SELECT_PRODUCT, PURCHASE_MENU_OPTION_FINISH_TRANSACTION};
 
 
-	private static final String FEED_OPTION_1 = "add $1";
-	private static final String FEED_OPTION_2 = "add $2";
-	private static final String FEED_OPTION_3 = "add $5";
-	private static final String FEED_OPTION_4 = "add $10";
-	private static final String FEED_OPTION_5 = "Exit this menu";
+	private static final String FEED_OPTION_1 = "Add $1";
+	private static final String FEED_OPTION_2 = "Add $2";
+	private static final String FEED_OPTION_3 = "Add $5";
+	private static final String FEED_OPTION_4 = "Add $10";
+	private static final String FEED_OPTION_5 = "Exit Menu";
 	private static final String[] FEED_OPTIONS = {FEED_OPTION_1, FEED_OPTION_2, FEED_OPTION_3, FEED_OPTION_4, FEED_OPTION_5};
 
 
@@ -48,7 +48,7 @@ public class VendingMachineCLI {
 
 	Scanner input = new Scanner(System.in);
 	Balance balance = new Balance();
-	String formattedMoney = NumberFormat.getCurrencyInstance().format(balance.getCurrentMoney());
+
 
 	File log = new File("log.txt"); // file that will log feedMoney, transactions, finish transaction
 
@@ -86,7 +86,7 @@ public class VendingMachineCLI {
 
 		while (true) {
 			System.out.println();
-			System.out.println("Current balance: $" + String.format("%.2f", balance.getCurrentMoney()));
+			System.out.println("Current Balance: $" + String.format("%.2f", balance.getCurrentMoney()));
 			String choice = (String) menu.getChoiceFromOptions(PURCHASE_MENU_OPTIONS);
 
 			switch (choice) {
@@ -157,6 +157,7 @@ public class VendingMachineCLI {
 
 	public void printToLogFeedMoney(){
 		try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
+			Date date = new Date();
 			writer.println(dateTimeFormatter.format(date) + " FEED MONEY: " + "$" + addedMoney + " $" + String.format("%.2f", balance.getCurrentMoney()));
 
 		} catch (FileNotFoundException e) {
@@ -183,15 +184,16 @@ public class VendingMachineCLI {
 
 
 			if (itemOptions.getInventoryList().containsKey(itemSlotChoice) && balance.getCurrentMoney() < itemOptions.getInventoryList().get(itemSlotChoice).getPrice()) {
-				System.out.println("Insufficient Funds, please feed the machine money (1)");
+				System.out.println("Insufficient Funds, please feed the machine more money.");
 				runPurchase();
 			}
 
-			if (itemOptions.getInventoryList().containsKey(itemSlotChoice) && soldOut == false) {
+			if (itemOptions.getInventoryList().containsKey(itemSlotChoice) && itemOptions.getInventoryList().get(itemSlotChoice).getMaxCapacity() > 0) {
 				balance.subtractFromCurrentMoney(itemOptions.getInventoryList().get(itemSlotChoice).getPrice());
 				System.out.println(itemOptions.getInventoryList().get(itemSlotChoice).dispense(itemSlotChoice) + "\n" + "Your remaining balance is: $" + String.format("%.2f", balance.getCurrentMoney()));
 
 				try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
+					Date date = new Date();
 					writer.println(dateTimeFormatter.format(date) + " " + itemOptions.getInventoryList().get(itemSlotChoice).getName() + " " + itemOptions.getInventoryList().get(itemSlotChoice).getSlotID() + " " + "$" + String.format("%.2f", previousAmount) + " $" + String.format("%.2f", balance.getCurrentMoney()));
 
 				} catch (FileNotFoundException e) {
@@ -201,7 +203,7 @@ public class VendingMachineCLI {
 
 				previousAmount = balance.getCurrentMoney();
 
-				runPurchase();
+				return;
 			} else {
 				System.out.println();
 				System.out.println("Please Select Product that is in stock (2).");
@@ -224,7 +226,6 @@ public class VendingMachineCLI {
 			if (itemOptions.getInventoryList().get(key).getMaxCapacity() >= 1) {
 				System.out.println(itemOptions.getInventoryList().get(key).getMaxCapacity() + "/5" + " AVAILABLE");
 			} else {
-				soldOut = true;
 				System.out.println("SOLD OUT");
 			}
 		}
@@ -238,9 +239,10 @@ public class VendingMachineCLI {
 		}
 
 		balance.subtractFromCurrentMoney(balance.getCurrentMoney());
-		System.out.println("Current balance: $" + String.format("%.2f", balance.getCurrentMoney()));
+		System.out.println("Current Balance: $" + String.format("%.2f", balance.getCurrentMoney()));
 
 		try (PrintWriter writer = new PrintWriter(new FileOutputStream(log, true))) {
+			Date date = new Date();
 			writer.println(dateTimeFormatter.format(date) + " " + "GIVE CHANGE:" + " " + "$" + String.format("%.2f", previousAmount) + " $" + String.format("%.2f", balance.getCurrentMoney()));
 
 		} catch (FileNotFoundException e) {
